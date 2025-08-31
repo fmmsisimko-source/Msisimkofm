@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin – Vipindi (Rahisi)</title>
+  <style>
+    :root { --bg:#0f172a; --card:#111827; --muted:#1f2937; --text:#e5e7eb; --accent:#22d3ee; --danger:#ef4444; --ok:#22c55e; }
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    .wrap{max-width:1060px;margin:32px auto;padding:0 16px}
+    .card{background:var(--card);border:1px solid #222834;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .p-24{padding:24px} .mb-16{margin-bottom:16px} .mb-24{margin-bottom:24px} .mt-16{margin-top:16px}
+    h1,h2{margin:0 0 12px} h1{font-size:24px} h2{font-size:18px;color:#cbd5e1}
+    label{display:block;font-size:13px;color:#cbd5e1;margin-bottom:6px}
+    input,textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #2a3342;background:#0b1220;color:var(--text)}
+    textarea{min-height:96px;resize:vertical}
+    .grid{display:grid;gap:12px}
+    .g-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid #2a3342;background:#0b1220;color:var(--text);padding:10px 14px;border-radius:999px;cursor:pointer}
+    .btn:hover{outline:1px solid #334155}
+    .btn.primary{background:linear-gradient(90deg,#22d3ee,#0ea5e9);color:#001018;border:none}
+    .btn.danger{background:#2b0f12;border-color:#3f1b1f;color:#fecaca}
+    .btn.ok{background:#092313;border-color:#123321;color:#bbf7d0}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid #1e293b;text-align:left;font-size:14px}
+    .pill{font-size:12px;padding:4px 8px;border-radius:999px;border:1px solid #263042;background:#0b1220}
+    .hidden{display:none}
+    .right{margin-left:auto}
+    .muted{color:#94a3b8}
+    .foot{opacity:.7;font-size:12px}
+    .notice{border-left:4px solid var(--accent);padding:12px 14px;background:#08262a;border-radius:10px}
+    .login{max-width:420px;margin:80px auto}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- LOGIN CARD -->
+    <div id="loginCard" class="card p-24 login">
+      <h1>Ingia – Admin wa Vipindi</h1>
+      <p class="muted mb-16">Toleo rahisi: Password inalinganishwa moja kwa moja (hakuna hash). Badili thamani ya password hapo chini kwenye msimbo.</p>
+      <label for="adminPass">Nenosiri la Admin</label>
+      <input id="adminPass" type="password" placeholder="Weka nenosiri" />
+      <div class="row mt-16">
+        <button class="btn primary" onclick="login()">Ingia</button>
+        <button class="btn" onclick="document.getElementById('adminPass').value=''">Futa</button>
+        <span class="right foot">Kidokezo: badili <code>ADMIN_PASSWORD</code> kabla ya kuweka mtandaoni.</span>
+      </div>
+    </div>
+
+    <!-- APP CARD -->
+    <div id="app" class="card p-24 hidden">
+      <div class="row mb-16">
+        <h1 class="">Usimamizi wa Vipindi</h1>
+        <span class="pill right" id="stats"></span>
+      </div>
+
+      <div class="notice mb-24">
+        <b>Jinsi inavyofanya kazi:</b> Data huhifadhiwa kwenye <i>localStorage</i> ya kivinjari chako. Tumia “Export” kuhifadhi faili ya JSON, na “Import” kuipakia tena/kuipeleka kwenye tovuti.
+      </div>
+
+      <div class="grid g-2 mb-24">
+        <div>
+          <h2>Ongeza / Hariri Kipindi</h2>
+          <form id="showForm" onsubmit="return saveShow(event)">
+            <input type="hidden" id="showId" />
+            <label for="title">Jina la Kipindi</label>
+            <input id="title" required placeholder="Mf: Asubuhi Njema" />
+
+            <label for="category" class="mt-16">Kategoria</label>
+            <input id="category" placeholder="Mf: Burudani, Habari" />
+
+            <label for="date" class="mt-16">Tarehe / Saa</label>
+            <input id="date" type="datetime-local" />
+
+            <label for="image" class="mt-16">Picha (URL)</label>
+            <input id="image" placeholder="https://.../cover.jpg" />
+
+            <label for="video" class="mt-16">Video/Audio (URL)</label>
+            <input id="video" placeholder="https://.../video.mp4 au stream url" />
+
+            <label for="description" class="mt-16">Maelezo</label>
+            <textarea id="description" placeholder="Maelezo mafupi ya kipindi..."></textarea>
+
+            <div class="row mt-16">
+              <label class="pill"><input id="active" type="checkbox" checked /> Inatumika (active)</label>
+              <label class="pill"><input id="protected" type="checkbox" /> Kipindi hiki kina nenosiri</label>
+            </div>
+
+            <label for="showPassword" class="mt-16">Nenosiri la Kipindi (hiari)</label>
+            <input id="showPassword" type="text" placeholder="Weka ikiwa unataka kulinda kipindi hiki" />
+
+            <div class="row mt-16">
+              <button class="btn primary" type="submit">Hifadhi</button>
+              <button class="btn" type="button" onclick="resetForm()">Anza upya</button>
+              <button class="btn danger right" type="button" onclick="wipeAll()">Futa Vyote</button>
+            </div>
+          </form>
+        </div>
+
+        <div>
+          <h2>Vipindi Vilivyopo</h2>
+          <div class="row mb-16">
+            <button class="btn" onclick="exportData()">Export JSON</button>
+            <label class="btn" for="importFile">Import JSON</label>
+            <input id="importFile" type="file" accept="application/json" class="hidden" onchange="importData(event)" />
+            <div class="right pill">Tafuta: <input id="search" oninput="renderTable()" placeholder="Andika kutafuta..." style="width:200px;margin-left:8px"></div>
+          </div>
+          <div class="card p-24" style="background:#0b1220">
+            <table id="showsTable">
+              <thead>
+                <tr>
+                  <th>Jina</th>
+                  <th>Kategoria</th>
+                  <th>Tarehe</th>
+                  <th>Hali</th>
+                  <th>Nenosiri?</th>
+                  <th style="width:160px">Vitendo</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">⚠️ Huu ni ulinzi wa msingi (frontend tu). Kwa ulinzi wa kweli wa mafaili/streams tumia server-side (mf. PHP/Node/.htaccess).</div>
+    </div>
+  </div>
+
+  <script>
+    // =====================
+    //  PASSWORD RAHISI (BILA HASH)
+    // =====================
+    // BADILI NENO SIRI HAPA CHINI 👇
+    const ADMIN_PASSWORD = "Raveen@3"; // <- iweke yako hapa, mfano: "MsiSimko@2025"
+
+    function login(){
+      const pass = document.getElementById('adminPass').value || '';
+      if(pass === ADMIN_PASSWORD){
+        localStorage.setItem('shows_admin_ok','1');
+        document.getElementById('loginCard').classList.add('hidden');
+        document.getElementById('app').classList.remove('hidden');
+        loadData();
+        renderTable();
+      } else {
+        alert('Nenosiri si sahihi. Jaribu tena.');
+      }
+    }
+
+    // Auto-login kama tayari umethibitishwa awali
+    (function(){
+      if(localStorage.getItem('shows_admin_ok')==='1'){
+        document.getElementById('loginCard').classList.add('hidden');
+        document.getElementById('app').classList.remove('hidden');
+        loadData();
+        renderTable();
+      }
+    })();
+
+    // =====================
+    //  HIFADHI & DATA
+    // =====================
+    const STORAGE_KEY = 'vipindi_data_v1';
+    let shows = [];
+
+    function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36)}
+
+    function loadData(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        shows = raw ? JSON.parse(raw) : [];
+      }catch(e){ shows = []; }
+      updateStats();
+    }
+
+    function saveData(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(shows));
+      updateStats();
+    }
+
+    function updateStats(){
+      const total = shows.length;
+      const active = shows.filter(s=>!!s.active).length;
+      document.getElementById('stats').textContent = `${active}/${total} active`;
+    }
+
+    function resetForm(){
+      document.getElementById('showId').value = '';
+      document.getElementById('title').value = '';
+      document.getElementById('category').value = '';
+      document.getElementById('date').value = '';
+      document.getElementById('image').value = '';
+      document.getElementById('video').value = '';
+      document.getElementById('description').value = '';
+      document.getElementById('active').checked = true;
+      document.getElementById('protected').checked = false;
+      document.getElementById('showPassword').value = '';
+    }
+
+    function saveShow(ev){
+      ev.preventDefault();
+      const id = document.getElementById('showId').value || uid();
+      const item = {
+        id,
+        title: document.getElementById('title').value.trim(),
+        category: document.getElementById('category').value.trim(),
+        date: document.getElementById('date').value,
+        image: document.getElementById('image').value.trim(),
+        video: document.getElementById('video').value.trim(),
+        description: document.getElementById('description').value.trim(),
+        active: document.getElementById('active').checked,
+        protected: document.getElementById('protected').checked,
+        showPassword: document.getElementById('showPassword').value.trim()
+      };
+
+      const idx = shows.findIndex(s=>s.id===id);
+      if(idx>-1){ shows[idx] = item; } else { shows.push(item); }
+      saveData();
+      renderTable();
+      resetForm();
+    }
+
+    function editShow(id){
+      const s = shows.find(x=>x.id===id); if(!s) return;
+      document.getElementById('showId').value = s.id;
+      document.getElementById('title').value = s.title || '';
+      document.getElementById('category').value = s.category || '';
+      document.getElementById('date').value = s.date || '';
+      document.getElementById('image').value = s.image || '';
+      document.getElementById('video').value = s.video || '';
+      document.getElementById('description').value = s.description || '';
+      document.getElementById('active').checked = !!s.active;
+      document.getElementById('protected').checked = !!s.protected;
+      document.getElementById('showPassword').value = s.showPassword || '';
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function removeShow(id){
+      if(!confirm('Una uhakika unataka kufuta kipindi hiki?')) return;
+      shows = shows.filter(s=>s.id!==id);
+      saveData();
+      renderTable();
+    }
+
+    function renderTable(){
+      const q = (document.getElementById('search').value || '').toLowerCase();
+      const tbody = document.querySelector('#showsTable tbody');
+      tbody.innerHTML='';
+      shows
+        .filter(s => !q || JSON.stringify(s).toLowerCase().includes(q))
+        .sort((a,b)=> (b.date||'').localeCompare(a.date||''))
+        .forEach(s=>{
+          const tr = document.createElement('tr');
+          const dateTxt = s.date ? new Date(s.date).toLocaleString() : '';
+          tr.innerHTML = `
+            <td>${escapeHtml(s.title||'')}</td>
+            <td>${escapeHtml(s.category||'')}</td>
+            <td class="muted">${escapeHtml(dateTxt)}</td>
+            <td>${s.active?'<span class="pill">Active</span>':'<span class="pill">Hidden</span>'}</td>
+            <td>${s.protected?'<span class="pill">Ndiyo</span>':'Hapana'}</td>
+            <td>
+              <button class="btn ok" onclick="editShow('${s.id}')">Hariri</button>
+              <button class="btn danger" onclick="removeShow('${s.id}')">Futa</button>
+            </td>`;
+          tbody.appendChild(tr);
+        });
+    }
+
+    function exportData(){
+      const blob = new Blob([JSON.stringify(shows,null,2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'vipindi.json'; a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importData(ev){
+      const file = ev.target.files?.[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          const data = JSON.parse(reader.result);
+          if(!Array.isArray(data)) throw new Error('Muundo si sahihi');
+          shows = data; saveData(); renderTable();
+        }catch(e){ alert('Imeshindikana kusoma faili: '+e.message); }
+      };
+      reader.readAsText(file);
+      ev.target.value = '';
+    }
+
+    function wipeAll(){
+      if(!confirm('Hatari! Hii itafuta vipindi vyote vilivyohifadhiwa kwenye kifaa hiki. Endelea?')) return;
+      shows = []; saveData(); renderTable(); resetForm();
+    }
+
+    function escapeHtml(s){
+      return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]))
+    }
+
+    // =====================
+    //  MFANO WA KULINDA KIPINDI (FRONTEND TU)
+    // =====================
+    function canViewShow(show){
+      if(!show.protected) return true;
+      const key = 'show_ok_'+show.id;
+      if(sessionStorage.getItem(key)==='1') return true;
+      const entered = prompt('Kipindi hiki kinalindwa. Weka nenosiri ili kuendelea:');
+      if(!entered) return false;
+      if(entered === (show.showPassword||'')){
+        sessionStorage.setItem(key,'1');
+        return true;
+      }
+      alert('Nenosiri sio sahihi.');
+      return false;
+    }
+  </script>
+</body>
+</html>

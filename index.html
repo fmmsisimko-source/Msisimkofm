@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="sw">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Msisimko Media | Tunakusisimua Kweli Kweli</title>
+  <meta name="description" content="Msisimko Media — News, Podcasts, Shows & Online Radio 24/7." />
+  <link rel="icon" href="assets/MSISIMKO FM LOGO.png" type="image/svg+xml" />
+  <link rel="preload" as="image" href="assets/MSISIMKO FM LOGO.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="Msisimko Media">
+        <span class="brand-logo" aria-hidden="true">🎧</span>
+        <span class="brand-name">Msisimko Media</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" id="navToggle">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Main Navigation">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#schedule" class="nav-link">Schedule</a>
+        <a href="#shows" class="nav-link">Shows</a>
+        <a href="#podcasts" class="nav-link">Podcast</a>
+        <a href="#about" class="nav-link">About us</a>
+        <a href="#contact" class="nav-link">Contact us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <img src="assets/MSISIMKO FM LOGO.png" alt="Msisimko Media banner" class="hero-media" />
+      <div class="hero-content container">
+        <h2>Tunakusisimua kweli kweli</h2>
+        <p>Msisimko Media ni kituo cha kidigitali cha habari, burudani na vipindi vya kielimu — tupo hewani 24/7 mtandaoni.</p>
+        <div class="hero-actions">
+          <button class="btn primary" id="btnPlay">▶️ Sikiliza Live</button>
+          <a class="btn ghost" href="#shows">Tazama Vipindi</a>
+        </div>
+        <div class="now-playing" role="status" aria-live="polite">
+          <strong>Now Playing:</strong> <span id="nowTrack">Loading…</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="platforms container" aria-labelledby="platformsTitle">
+      <h2 id="platformsTitle">Sikiliza kupitia majukwaa haya</h2>
+      <div class="platforms-grid">
+        <a class="platform" href="http://tun.in/sfK1I" aria-label="TuneIn">TuneIn</a>
+        <a class="platform" href="" aria-label="Radio Garden">Radio Garden</a>
+        <a class="platform" href="https://onlineradiobox.com/tz/dafani/" aria-label="Live Online Radio">Live Online Radio</a>
+        <a class="platform" href="#" aria-label="MyTuner">MyTuner</a>
+        <a class="platform" href="#" aria-label="Radio.net">Radio.net</a>
+        <a class="platform" href="#" aria-label="Oi Radio">Oi Radio</a>
+      </div>
+    </section>
+
+    <section class="player container" id="player" aria-labelledby="playerTitle">
+      <h2 id="playerTitle">Msisimko Live Player</h2>
+      <div class="card">
+        <audio id="audio" preload="none" crossorigin="anonymous">
+          <!-- Badilisha stream URL hapa chini -->
+          <source src="https://stream.zeno.fm/vzfx3wpvf48uv" type="audio/mpeg">
+        </audio>
+        <div class="controls">
+          <button class="btn" id="playPause">Play</button>
+          <button class="btn" id="stopBtn">Stop</button>
+          <label class="vol">
+            <span>Volume</span>
+            <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8" />
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="schedule container" id="schedule" aria-labelledby="scheduleTitle">
+      <h2 id="scheduleTitle">Ratiba ya Vipindi (Mon–Fri)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Muda</th>
+              <th>Kipindi</th>
+              <th>Maelezo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>06:00–09:00</td><td>Morning Vibes</td><td>Habari, Traffic & Motivation</td></tr>
+            <tr><td>09:00–12:00</td><td>Msisimko Connect</td><td>Elimu, Teknolojia & Interviews</td></tr>
+            <tr><td>12:00–15:00</td><td>Midday Mashup</td><td>Muziki Mchanganyiko & Requests</td></tr>
+            <tr><td>15:00–18:00</td><td>Drive Time</td><td>Updates za Mjini, Michezo, Trending</td></tr>
+            <tr><td>18:00–21:00</td><td>Chill & Chat</td><td>Maongezi ya Kijana, Ujuzi & Career</td></tr>
+            <tr><td>21:00–00:00</td><td>Late Night Sessions</td><td>Slow Jams & Podcast Recaps</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="shows container" id="shows" aria-labelledby="showsTitle">
+      <h2 id="showsTitle">Vipindi (Shows)</h2>
+      <div class="grid cards">
+        <article class="card">
+          <img src="assets/studio1.png" alt="Morning Vibes" loading="lazy">
+          <div class="card-body">
+            <h3>Morning Vibes</h3>
+            <p>Amka na nguvu — habari, traffic na good energy.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="assets/studio3.png" alt="Msisimko Connect" loading="lazy">
+          <div class="card-body">
+            <h3>Msisimko Connect</h3>
+            <p>Teknolojia, elimu na mahojiano ya kina.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="assets/mtaani.png" alt="Drive Time" loading="lazy">
+          <div class="card-body">
+            <h3>Drive Time</h3>
+            <p>Updates za mjini, michezo na trending topics.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="assets/studio2.png" alt="Chill & Chat" loading="lazy">
+          <div class="card-body">
+            <h3>Chill & Chat</h3>
+            <p>Maongezi ya kijana kuhusu maisha na kazi.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="podcasts container" id="podcasts" aria-labelledby="podcastsTitle">
+      <h2 id="podcastsTitle">Podcasts</h2>
+      <div class="grid cards">
+        <article class="card">
+          <img src="assets/interview.png" alt="Nifahamishe Podcast" loading="lazy">
+          <div class="card-body">
+            <h3>Nifahamishe</h3>
+            <p>Mjadala wa kijamii, elimu na falsafa ya maisha.</p>
+            <a class="btn small" href="#">Play Episode</a>
+          </div>
+        </article>
+        <article class="card">
+          <img src="assets/market.png" alt="Business Booster Podcast" loading="lazy">
+          <div class="card-body">
+            <h3>Business Booster</h3>
+            <p>Biashara, ubunifu na mafanikio ya ndani ya Bongo.</p>
+            <a class="btn small" href="#">Play Episode</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="about container" id="about" aria-labelledby="aboutTitle">
+      <h2 id="aboutTitle">About Us</h2>
+      <p>Msisimko Media ni taasisi ya kisasa inayowaletea wasikilizaji na watazamaji maudhui bora ya habari, burudani na elimu. Tupo Dar es Salaam, Tanzania — hewani 24/7 kupitia mtandao.</p>
+      <ul class="about-list">
+        <li>📍 Babati, Dar es Salaam</li>
+        <li>☎️ +255 782933535</li>
+        <li>🌐 www.msisimkomedia.co.tz</li>
+      </ul>
+    </section>
+
+    <section class="contact container" id="contact" aria-labelledby="contactTitle">
+      <h2 id="contactTitle">Contact Us</h2>
+      <form id="contactForm" class="card" novalidate>
+        <div class="grid form-grid">
+          <label>Jina
+            <input type="text" name="name" required placeholder="Jina Kamili" />
+          </label>
+          <label>Barua Pepe
+            <input type="email" name="email" required placeholder="you@email.com" />
+          </label>
+          <label class="full">Ujumbe
+            <textarea name="message" rows="4" required placeholder="Ujumbe wako"></textarea>
+          </label>
+        </div>
+        <div class="form-actions">
+          <button class="btn primary" type="submit">Tuma Ujumbe</button>
+          <p id="formMsg" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Msisimko Media. All Rights Reserved.</p>
+      <p class="small">Imeundwa na Bozzy Bizzy Msisimko Media CEO.</p>
+    </div>
+  </footer>
+
+  <a href="#top" class="to-top" aria-label="Rudi juu">↑</a>
+
+  <script src="script.js"></script>
+</body>
+</html>
