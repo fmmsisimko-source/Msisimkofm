@@ -87,3 +87,17 @@ input:focus,textarea:focus{outline:none;border-color:var(--ring);box-shadow:0 0 
   .site-nav.open{transform:translateY(0)}
   .nav-toggle{display:inline-flex}
 }
+
+
+/* Yellow accent for CTA buttons */
+.btn.cta {
+  background: linear-gradient(135deg, #facc15, #eab308);
+  color: #000;
+  border: none;
+}
+
+/* Yellow hover for nav links */
+.nav-link:hover {
+  background: rgba(250, 204, 21, 0.2);
+  color: #facc15;
+}
