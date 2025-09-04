@@ -101,3 +101,10 @@ input:focus,textarea:focus{outline:none;border-color:var(--ring);box-shadow:0 0 
   background: rgba(250, 204, 21, 0.2);
   color: #facc15;
 }
+
+
+/* Dark text for nav links on yellow header */
+.site-header .nav-link,
+.site-header .brand {
+  color: #111 !important;
+}
